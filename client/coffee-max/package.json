@@ -1,0 +1,31 @@
+{
+  "name": "coffee-max",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.0.17",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "dompurify": "^3.0.5",
+    "dotenv": "^16.3.1",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.12",
+    "moment": "^2.29.4",
+    "next": "13.4.12",
+    "postcss": "8.4.27",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.14.2",
+    "sass": "^1.66.1",
+    "tailwindcss": "3.3.3",
+    "web-vitals": "^3.4.0"
+  }
+}
