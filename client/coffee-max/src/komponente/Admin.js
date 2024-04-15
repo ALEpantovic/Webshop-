@@ -36,13 +36,9 @@ function AdminPage() {
     }).catch((error) => {
       setError('Error fetching products');
     });
-  }, []); // Empty dependency array, so this effect runs once on component mount
-
-  // Function to delete a product
+  }, []); 
   const deleteProduct = (productId) => {
-    // Send a DELETE request to remove the product from the database
     axios.delete(`http://localhost:8800/test/${productId}`).then(() => {
-      // Refresh the product list after deletion
       axios.get('http://localhost:8800/api/products').then((response) => {
         setProducts(response.data);
       });
@@ -50,29 +46,26 @@ function AdminPage() {
   };
 
   const createProduct = () => {
-    // Create an object to collect the product information from form fields
     const newProductData = {
-      Naziv: 'New Product Name', // Default value (you can change this)
-      Proizvodjac: 'New Manufacturer', // Default value (you can change this)
-      Tip_Kafe: 'New Coffee Type', // Default value (you can change this)
-      Vrsta_Kafe: 'New Coffee Variety', // Default value (you can change this)
-      Opis: 'New Product Description', // Default value (you can change this)
-      cena: 0, // Default value (you can change this)
-      Slike: 'URL_TO_IMAGE', // Provide the actual image URL or data here
+      Naziv: 'New Product Name',
+      Proizvodjac: 'New Manufacturer', 
+      Tip_Kafe: 'New Coffee Type', 
+      Vrsta_Kafe: 'New Coffee Variety', 
+      Opis: 'New Product Description',
+      cena: 0, 
+      Slike: 'URL_TO_IMAGE',
     };
   
-    // Send a POST request to create the new product
     axios.post('http://localhost:8800/api/admin/products', newProductData).then(() => {
-      // Refresh the product list after creation
       axios.get('http://localhost:8800/api/products').then((response) => {
         setProducts(response.data);
       });
     });
   };
   
-  // Function to update a product (Edit)
+
   const updateProduct = () => {
-    // Create an object to collect the updated product information from form inputs
+
     const updatedProductData = {
       Naziv: editedProduct.Naziv,
       Proizvodjac: editedProduct.Proizvodjac,
@@ -84,27 +77,22 @@ function AdminPage() {
   
     axios.put(`http://localhost:8800/api/admin/products/${editedProduct.id}`, updatedProductData)
       .then(() => {
-        // Refresh the product list after updating
         axiosInstance.get('/api/products').then((response) => {
           setProducts(response.data);
         });
-        // Close the edit popup
         closeEditPopup();
       })
       .catch((error) => {
-        // Handle errors here, e.g., show an error message to the user
-        console.error('Error updating product:', error);
+        console.error('Greska u izmeni proizvoda:', error);
       });
   };
 
-  // Function to open the edit popup
   const openEditPopup = (productId) => {
     const productToEdit = products.find((product) => product.id === productId);
     setEditedProduct(productToEdit);
     setIsEditPopupVisible(true);
   };
 
-  // Function to close the edit popup
   const closeEditPopup = () => {
     setIsEditPopupVisible(false);
   };
