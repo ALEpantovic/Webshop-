@@ -9,7 +9,6 @@ const db = mysql.createConnection({
     password: "Aj1Berem2Grozdje3",
     database: "baza",
   });
-// User registration
 export const register = (req, res) => {
   const { username, email, password } = req.body;
 
@@ -38,7 +37,6 @@ export const register = (req, res) => {
   });
 };
 
-// User login
 export const login = (req, res) => {
   const { username, password } = req.body;
 
@@ -63,19 +61,18 @@ export const login = (req, res) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: "none", // Change according to your needs
-        secure: true, // Use secure flag in production
+        sameSite: "none", 
+        secure: true, 
       })
       .status(200)
       .json(userDetails);
   });
 };
 
-// User logout
 export const logout = (req, res) => {
   res.clearCookie("access_token", {
     httpOnly: true,
-    sameSite: "none", // Change according to your needs
-    secure: true, // Use secure flag in production
+    sameSite: "none",
+    secure: true, 
   }).status(200).json({ message: "User has been logged out" });
 };

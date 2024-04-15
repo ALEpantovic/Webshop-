@@ -20,8 +20,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8800/backend/auth/login", inputs);
-      const token = response.data.token; // Correctly extract the token from response.data
-      localStorage.setItem('token', token); // Set the token in localStorage
+      const token = response.data.token;
+      localStorage.setItem('token', token);
       console.log(response.data)
       console.log("Client JWT Token:", token);
       console.log("Login successful:", response.data);
@@ -66,7 +66,7 @@ const Login = () => {
           </button>
           {err && <p className="text-red-500">{err.error}</p>}
           <span className="text-gray-600">
-            Don't have an account? <a href="/register">Register</a>
+           <br/> <br/>  Don't have an account? <a href="/register">Register</a>
           </span>
         </form>
       </div>

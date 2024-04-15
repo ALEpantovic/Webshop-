@@ -43,7 +43,7 @@ app.post("/backend/upload", upload.single("file"), function (req, res) {
   res.status(200).json(file.filename);
 });
 
-/*function isAdmin(req, res, next) {
+function isAdmin(req, res, next) {
   const token = req.headers.authorization;
 
   if (!token) {
@@ -73,11 +73,10 @@ app.post("/backend/upload", upload.single("file"), function (req, res) {
         return res.status(403).json({ error: 'Forbidden: Insufficient privileges.' });
       }
 
-      // User is an administrator, proceed to the next middleware or route
       next();
     });
   });
-}*/
+}
 app.delete('/test/:id', (req, res) => {
   const productId = req.params.id;
   const deleteProductQuery = 'DELETE FROM product WHERE id=?';
@@ -90,8 +89,6 @@ app.delete('/test/:id', (req, res) => {
     return res.status(200).json({ message: 'Product deleted successfully.' });
   });
 });
-
-// User registration
 app.post("/backend/auth/register", (req, res) => {
   const { username, email, password, ime_prezime, telefon, grad_adresa } = req.body;
 
@@ -147,14 +144,14 @@ app.post("/backend/auth/login", (req, res) => {
     }
 
     try {
-      const token = jwt.sign({ id: data[0].id }, JWT_SECRET); // Use JWT_SECRET here
+      const token = jwt.sign({ id: data[0].id }, JWT_SECRET); 
       const { password: _, ...userDetails } = data[0];
     
       res
         .cookie("token", token, {
           httpOnly: false,
-          sameSite: "lax", // Change according to your needs
-          secure: false, // Use secure flag in production
+          sameSite: "lax", 
+          secure: false,
         })
         .status(200)
         .json({token: token, ...userDetails }); 
@@ -165,9 +162,6 @@ app.post("/backend/auth/login", (req, res) => {
   });
 });
 
-
-
-// Create a new productnpm 
 app.post('/api/products', (req, res) => {
   const { Naziv, Proizvodjac, Tip_kafe, Vrsta_kafe, Opis, cena } = req.body;
 
@@ -190,7 +184,7 @@ app.post('/api/products', (req, res) => {
   );
 });
 
-// Read: Get a list of all products
+
 app.get('/api/products', (req, res) => {
   const selectAllProductsQuery = 'SELECT * FROM product';
 
@@ -203,7 +197,6 @@ app.get('/api/products', (req, res) => {
   });
 });
 
-// Read: Get a single product by ID
 app.get('/api/products/:id', (req, res) => {
   const productId = req.params.id;
   const selectProductQuery = 'SELECT * FROM product WHERE id = ?';
@@ -223,12 +216,11 @@ app.get('/api/products/:id', (req, res) => {
 app.post('/api/admin/products', (req, res) => {
   const { Naziv, Proizvodjac, Tip_Kafe, Vrsta_Kafe, Opis, cena, Slike } = req.body;
 
-  // Validate input
+
   if (!Naziv || !Proizvodjac || !Tip_Kafe || !Vrsta_Kafe || !Opis || !cena || !Slike) {
     return res.status(400).json({ error: 'All fields are required.' });
   }
 
-  // Insert the new product into the database (this is a simplified example)
   const insertProductQuery = 'INSERT INTO product (Naziv, Proizvodjac, Tip_Kafe, Vrsta_Kafe, Opis, cena, Slike) VALUES (?, ?, ?, ?, ?, ?, ?)';
   db.query(insertProductQuery, [Naziv, Proizvodjac, Tip_Kafe, Vrsta_Kafe, Opis, cena, Slike], (err, result) => {
     if (err) {
@@ -240,18 +232,16 @@ app.post('/api/admin/products', (req, res) => {
   });
 });
 
-// Update a product (accessible only to administrators)
 app.put('/api/admin/products/:id', (req, res) => {
   const productId = req.params.id;
   const { Naziv, Proizvodjac, Tip_kafe, Vrsta_kafe, Opis, cena } = req.body;
   console.log('Received update request with data:', req.body);
 
-  // Validate input
+
   if (!Naziv || !Proizvodjac || !Tip_kafe || !Vrsta_kafe || !Opis || !cena) {
     return res.status(400).json({ error: 'All fields are required.' });
   }
 
-  // Update the product in the database
   const updateProductQuery = 'UPDATE product SET Naziv=?, Proizvodjac=?, Tip_Kafe=?, Vrsta_Kafe=?, Opis=?, cena=? WHERE id=?';
   db.query(updateProductQuery, [Naziv, Proizvodjac, Tip_kafe, Vrsta_kafe, Opis, cena, productId], (err, result) => {
     if (err) {
@@ -263,8 +253,6 @@ app.put('/api/admin/products/:id', (req, res) => {
   });
 });
 
-
-// User logout
 app.post("/backend/auth/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: false,
@@ -301,7 +289,6 @@ app.get('/backend/get-role', (req, res) => {
       return res.status(403).json({ error: 'Forbidden: Invalid token.' });
     }
     const userId = decoded.id;
-    // Fetch user role from the database (this is a simplified example)
     const getUserRoleQuery = 'SELECT role FROM user WHERE id = ?';
     db.query(getUserRoleQuery, [userId], (err, result) => {
       if (err) {
@@ -310,9 +297,7 @@ app.get('/backend/get-role', (req, res) => {
       }
 
       const userRole = result[0] ? result[0].role : '';
-
-      // Return the user's role
-      return res.status(200).json({ userRole }); // Send 'userRole' instead of 'role'
+      return res.status(200).json({ userRole }); 
     });
   });
 });

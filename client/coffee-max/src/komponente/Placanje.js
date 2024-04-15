@@ -18,15 +18,6 @@ const placanje = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // You can implement the logic here to handle the form submission
-    // For example, send the data to a server for processing
-    // After successful processing, you can clear the cart and redirect to a thank you page
-
-    // Clear the cart (this logic may vary based on your implementation)
-    // clearCart();
-
-    // Redirect to thank you page
-    // router.push("/thank-you");
   };
 
   return (

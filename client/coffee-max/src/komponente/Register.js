@@ -19,9 +19,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setError(null); // Clear any previous errors
+      setError(null); 
       
-      // Validate inputs
       if (!inputs.username || !inputs.email || !inputs.password) {
         setError("All fields are required.");
         return;
@@ -36,7 +35,7 @@ const Register = () => {
       window.location.href = "/";
     } catch (err) {
       console.log(inputs.username,inputs.email,inputs.password)
-      console.error("Registration error:", err); // Log the error for debugging
+      console.error("Registration error:", err); 
       setError("An error occurred during registration. Please try again.");
     }
   };
@@ -102,7 +101,7 @@ const Register = () => {
           </button>
           {error && <p className="text-red-500">{error}</p>}
           <span className="text-gray-600">
-            Imate nalog? <a href="/login">Login</a>
+           <br/><br/>  Imate nalog? <a href="/login">Login</a>
           </span>
         </form>
       </div>
